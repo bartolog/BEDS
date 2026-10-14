@@ -6,7 +6,8 @@ uses
   System.Classes, System.SysUtils, System.Generics.Collections, System.UITypes, System.Variants,
   Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs,
   Data.model, cxGrid, cxGridLevel, cxGridCustomView, cxGridTableView,
-  cxButtons, cxControls, cxStyles, Vcl.Graphics, System.IOUtils;
+  cxButtons, cxControls, cxStyles, cxGridCustomTableView,
+  cxLookAndFeels, Vcl.Graphics, System.IOUtils;
 
 type
   TfraLetti = class(TFrame)
