@@ -76,6 +76,7 @@ object fMain: TfMain
     end
     object navMagazzino: TdxNavBarItem
       Caption = 'Magazzino'
+      OnClick = navMagazzinoClick
     end
     object navAcquisti: TdxNavBarItem
       Caption = 'Acquisti'
