@@ -79,6 +79,8 @@ begin
   FView.OptionsView.GroupByBox := False;
   FView.OptionsView.ColumnAutoWidth := True;
   FView.OptionsData.Editing := False;
+  FView.OptionsData.Deleting := False;
+  FView.OptionsData.Inserting := False;
   FView.OnDblClick := DoppioClick;
   with FView.CreateColumn do begin Caption := 'Codice'; Width := 150; end;
   with FView.CreateColumn do begin Caption := 'Descrizione'; Width := 450; end;
