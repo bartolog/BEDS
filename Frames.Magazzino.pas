@@ -3,7 +3,7 @@ unit Frames.Magazzino;
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Variants, System.Math, System.Generics.Collections, System.UITypes,
+  System.Classes, System.SysUtils, System.Variants, System.Math, System.Generics.Collections, System.Generics.Defaults, System.DateUtils, System.UITypes,
   Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs, Vcl.Graphics,
   Data.model, cxGrid, cxGridLevel, cxGridCustomView, cxGridTableView,
   cxButtons, cxControls, cxStyles, cxLookAndFeels;
@@ -14,6 +14,7 @@ type
     FGrid: TcxGrid;
     FView: TcxGridTableView;
     FRicerca: TEdit;
+    FFiltro: TComboBox;
     FMacroParti: TList<TMacroParte>;
     FMovimenti: TList<TMovimentoMagazzino>;
     FScorte: TList<TScorta>;
@@ -22,6 +23,7 @@ type
     procedure Filtra(Sender: TObject);
     procedure NuovoMovimento(Sender: TObject);
     procedure ModificaScorta(Sender: TObject);
+    procedure Storico(Sender: TObject);
     function Selezionata: TMacroParte;
     function Giacenza(AMacroParte: TMacroParte): Integer;
     function ScortaMinima(AMacroParte: TMacroParte): Integer;
@@ -80,12 +82,26 @@ begin
   Pulsante('Carico / Scarico', 12, NuovoMovimento, $00B36517);
   Pulsante('Scorta minima', 165, ModificaScorta, $009A671E);
   Pulsante('Aggiorna', 318, Carica, $009A671E);
+  Pulsante('Movimenti', 471, Storico, $009A671E);
 
   FRicerca := TEdit.Create(Self);
   FRicerca.Parent := Barra;
-  FRicerca.SetBounds(480, 16, 310, 27);
+  FRicerca.SetBounds(630, 16, 180, 27);
   FRicerca.TextHint := 'Cerca macro-parte';
   FRicerca.OnChange := Filtra;
+
+  FFiltro := TComboBox.Create(Self);
+  FFiltro.Parent := Barra;
+  FFiltro.SetBounds(820, 16, 180, 27);
+  FFiltro.Style := csDropDownList;
+  FFiltro.Items.Add('Tutte');
+  FFiltro.Items.Add('Da ordinare');
+  FFiltro.Items.Add('Giacenza zero');
+  FFiltro.Items.Add('Sotto scorta');
+  FFiltro.Items.Add('Disponibili');
+  FFiltro.Items.Add('Giacenza negativa');
+  FFiltro.ItemIndex := 0;
+  FFiltro.OnChange := Filtra;
 
   FGrid := TcxGrid.Create(Self);
   FGrid.Parent := Self;
@@ -108,6 +124,7 @@ begin
   FView.OptionsData.Editing := False;
   FView.OptionsData.Deleting := False;
   FView.OptionsData.Inserting := False;
+  FView.OnDblClick := Storico;
   with FView.CreateColumn do begin Caption := 'Codice'; Width := 150; end;
   with FView.CreateColumn do begin Caption := 'Macro-parte'; Width := 400; end;
   with FView.CreateColumn do begin Caption := 'Giacenza'; Width := 120; end;
@@ -197,10 +214,17 @@ begin
       if (Filtro <> '') and
          (Pos(Filtro, UpperCase(string(P.Codice))) = 0) and
          (Pos(Filtro, UpperCase(string(P.Descrizione))) = 0) then Continue;
-      I := FView.DataController.RecordCount;
-      FView.DataController.RecordCount := I + 1;
       G := Giacenza(P);
       Min := ScortaMinima(P);
+      case FFiltro.ItemIndex of
+        1: if G >= Min then Continue;
+        2: if G <> 0 then Continue;
+        3: if (G <= 0) or (G >= Min) then Continue;
+        4: if G <= 0 then Continue;
+        5: if G >= 0 then Continue;
+      end;
+      I := FView.DataController.RecordCount;
+      FView.DataController.RecordCount := I + 1;
       FView.DataController.Values[I, 0] := string(P.Codice);
       FView.DataController.Values[I, 1] := string(P.Descrizione);
       FView.DataController.Values[I, 2] := G;
@@ -335,6 +359,90 @@ begin
   except
     on E: Exception do
       MessageDlg('Errore scorta: ' + E.Message, mtError, [mbOK], 0);
+  end;
+end;
+
+procedure TfraMagazzino.Storico(Sender: TObject);
+var
+  P: TMacroParte;
+  F: TForm;
+  G: TcxGrid;
+  V: TcxGridTableView;
+  L: TcxGridLevel;
+  M: TMovimentoMagazzino;
+  Lista: TList<TMovimentoMagazzino>;
+  I, Saldo: Integer;
+begin
+  P := Selezionata;
+  if P = nil then
+  begin
+    MessageDlg('Selezionare una macro-parte.', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+  F := TForm.CreateNew(Self);
+  try
+    F.Caption := 'Movimenti - ' + string(P.Codice) + ' - ' +
+      string(P.Descrizione);
+    F.Width := 1050;
+    F.Height := 600;
+    F.Position := poMainFormCenter;
+    F.Font.Name := 'Segoe UI';
+    G := TcxGrid.Create(F);
+    G.Parent := F;
+    G.Align := alClient;
+    V := G.CreateView(TcxGridTableView) as TcxGridTableView;
+    L := G.Levels.Add;
+    L.GridView := V;
+    V.OptionsView.GroupByBox := False;
+    V.OptionsView.ColumnAutoWidth := True;
+    V.OptionsData.Editing := False;
+    V.OptionsData.Deleting := False;
+    V.OptionsData.Inserting := False;
+    with V.CreateColumn do begin Caption := 'Data'; Width := 150; end;
+    with V.CreateColumn do begin Caption := 'Tipo'; Width := 80; end;
+    with V.CreateColumn do begin Caption := 'Quantita'; Width := 100; end;
+    with V.CreateColumn do begin Caption := 'Causale'; Width := 180; end;
+    with V.CreateColumn do begin Caption := 'Documento / riferimento'; Width := 240; end;
+    with V.CreateColumn do begin Caption := 'Note'; Width := 220; end;
+    with V.CreateColumn do begin Caption := 'Saldo'; Width := 100; end;
+    Lista := TList<TMovimentoMagazzino>.Create;
+    try
+      for M in FMovimenti do
+        if Assigned(M.IdMacroParte) and (M.IdMacroParte.Id = P.Id) then
+          Lista.Add(M);
+      Lista.Sort(TComparer<TMovimentoMagazzino>.Construct(
+        function(const A, B: TMovimentoMagazzino): Integer
+        begin
+          Result := CompareDateTime(A.DataMovimento, B.DataMovimento);
+          if Result = 0 then
+          begin
+            if A.Id < B.Id then Result := -1
+            else if A.Id > B.Id then Result := 1;
+          end;
+        end));
+      Saldo := 0;
+      V.DataController.RecordCount := Lista.Count;
+      for I := 0 to Lista.Count - 1 do
+      begin
+        M := Lista[I];
+        if SameText(M.TipoMovimento, 'E') then
+          Inc(Saldo, M.Quantita)
+        else if SameText(M.TipoMovimento, 'U') then
+          Dec(Saldo, M.Quantita);
+        V.DataController.Values[I, 0] := FormatDateTime('dd/mm/yyyy hh:nn', M.DataMovimento);
+        V.DataController.Values[I, 1] := M.TipoMovimento;
+        V.DataController.Values[I, 2] := M.Quantita;
+        V.DataController.Values[I, 3] := M.Causale;
+        V.DataController.Values[I, 4] := string(M.Riferimento);
+        V.DataController.Values[I, 5] := string(M.Note);
+        V.DataController.Values[I, 6] := Saldo;
+      end;
+    finally
+      Lista.Free;
+    end;
+    F.ShowModal;
+  finally
+    F.Free;
   end;
 end;
 
