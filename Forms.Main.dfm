@@ -80,6 +80,7 @@ object fMain: TfMain
     end
     object navAcquisti: TdxNavBarItem
       Caption = 'Acquisti'
+      OnClick = navAcquistiClick
     end
     object navProduzione: TdxNavBarItem
       Caption = 'Produzione'
