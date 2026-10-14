@@ -47,7 +47,7 @@ type
 implementation
 
 uses
-  Forms.DataModule, Vcl.Graphics;
+  Forms.DataModule, Vcl.Graphics, System.IOUtils;
 
 constructor TfrmComposizioneLetto.CreatePerLetto(
   AOwner: TComponent; ALetto: TLetto);
@@ -56,6 +56,7 @@ var
   Etichetta: TLabel;
   Bottone: TcxButton;
   Livello: TcxGridLevel;
+  PercorsoIcona: string;
   procedure CreaBottone(const Titolo: string; X: Integer;
     Handler: TNotifyEvent);
   begin
@@ -64,6 +65,21 @@ var
     Bottone.SetBounds(X, 8, 130, 34);
     Bottone.Caption := Titolo;
     Bottone.OnClick := Handler;
+    if Titolo = 'Aggiungi' then PercorsoIcona := 'nuovo.svg'
+    else if Titolo = 'Elimina' then PercorsoIcona := 'elimina.svg'
+    else if Titolo = 'Modifica quantita' then PercorsoIcona := 'composizione.svg'
+    else PercorsoIcona := '';
+    if PercorsoIcona <> '' then
+    begin
+      PercorsoIcona := TPath.Combine(ExtractFilePath(ParamStr(0)),
+        TPath.Combine('Icons', PercorsoIcona));
+      if FileExists(PercorsoIcona) then
+        try
+          Bottone.OptionsImage.Glyph.LoadFromFile(PercorsoIcona);
+        except
+          Bottone.OptionsImage.Glyph.Assign(nil);
+        end;
+    end;
     Bottone.LookAndFeel.NativeStyle := False;
     Bottone.LookAndFeel.SkinName := '';
     Bottone.Colors.Default := $009A671E;
