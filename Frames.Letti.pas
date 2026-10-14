@@ -27,6 +27,7 @@ type
     procedure Elimina(Sender: TObject);
     procedure Aggiorna(Sender: TObject);
     procedure DoppioClick(Sender: TObject);
+    procedure ApriComposizione(Sender: TObject);
     function Selezionato: TLetto;
     function DialogoLetto(ALetto: TLetto): Boolean;
   public
@@ -39,7 +40,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Forms.DataModule;
+  Forms.DataModule, Forms.ComposizioneLetto;
 
 constructor TfraLetti.Create(AOwner: TComponent);
 var
@@ -75,10 +76,11 @@ begin
   Pulsante('Modifica', 150, Modifica);
   Pulsante('Elimina', 288, Elimina);
   Pulsante('Aggiorna', 426, Aggiorna);
+  Pulsante('Composizione', 564, ApriComposizione);
 
   FRicerca := TEdit.Create(Self);
   FRicerca.Parent := Barra;
-  FRicerca.SetBounds(575, 16, 300, 27);
+  FRicerca.SetBounds(710, 16, 260, 27);
   FRicerca.Anchors := [akLeft, akTop, akRight];
   FRicerca.TextHint := 'Cerca codice, descrizione o modello';
   FRicerca.OnChange := Filtra;
@@ -350,6 +352,25 @@ end;
 procedure TfraLetti.Aggiorna(Sender: TObject);
 begin
   Carica;
+end;
+
+procedure TfraLetti.ApriComposizione(Sender: TObject);
+var
+  L: TLetto;
+  D: TfrmComposizioneLetto;
+begin
+  L := Selezionato;
+  if L = nil then
+  begin
+    MessageDlg('Selezionare un letto.', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+  D := TfrmComposizioneLetto.CreatePerLetto(Self, L);
+  try
+    D.ShowModal;
+  finally
+    D.Free;
+  end;
 end;
 
 procedure TfraLetti.DoppioClick(Sender: TObject);
