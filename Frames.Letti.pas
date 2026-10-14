@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, System.SysUtils, System.Generics.Collections, System.UITypes, System.Variants,
-  Winapi.Windows, Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs,
+  Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs,
   Data.model, cxGrid, cxGridLevel, cxGridCustomView, cxGridTableView,
   cxButtons, cxControls;
 
@@ -22,7 +22,6 @@ type
     procedure Elimina(Sender: TObject);
     procedure Aggiorna(Sender: TObject);
     procedure DoppioClick(Sender: TObject);
-    procedure GrigliaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     function Selezionato: TLetto;
     function DialogoLetto(ALetto: TLetto): Boolean;
   public
@@ -83,7 +82,6 @@ begin
   FView.OptionsData.Deleting := False;
   FView.OptionsData.Inserting := False;
   FView.OnDblClick := DoppioClick;
-  FGrid.OnKeyDown := GrigliaKeyDown;
   with FView.CreateColumn do begin Caption := 'Codice'; Width := 150; end;
   with FView.CreateColumn do begin Caption := 'Descrizione'; Width := 450; end;
   with FView.CreateColumn do begin Caption := 'Modello'; Width := 220; end;
@@ -300,12 +298,6 @@ end;
 procedure TfraLetti.Aggiorna(Sender: TObject);
 begin
   Carica;
-end;
-
-procedure TfraLetti.GrigliaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if (Key = VK_DELETE) or ((Key = VK_SUBTRACT) and (ssCtrl in Shift)) then
-    Key := 0;
 end;
 
 procedure TfraLetti.DoppioClick(Sender: TObject);
