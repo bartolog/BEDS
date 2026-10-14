@@ -25,6 +25,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure navMacroPartiClick(Sender: TObject);
     procedure navLettiClick(Sender: TObject);
+    procedure navMagazzinoClick(Sender: TObject);
   private
     { Private declarations }
     private
@@ -42,7 +43,7 @@ implementation
 
 {$R *.dfm}
 
-uses Frames.MacroParti, Frames.Letti;
+uses Frames.MacroParti, Frames.Letti, Frames.Magazzino;
 
 { TfMain }
 
@@ -73,6 +74,11 @@ end;
 procedure TfMain.navLettiClick(Sender: TObject);
 begin
   MostraPagina(TfraLetti);
+end;
+
+procedure TfMain.navMagazzinoClick(Sender: TObject);
+begin
+  MostraPagina(TfraMagazzino);
 end;
 
 end.
