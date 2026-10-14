@@ -101,7 +101,6 @@ begin
   FView.Styles.Selection := FSelectionStyle;
   FView.OptionsView.GroupByBox := False;
   FView.OptionsView.Indicator := False;
-  FView.OptionsView.GridLines := glVertical;
   FView.OptionsView.ColumnAutoWidth := True;
   FView.OptionsData.Editing := False;
   FView.OptionsData.Deleting := False;
