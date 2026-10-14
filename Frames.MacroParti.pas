@@ -76,7 +76,8 @@ begin
   ConfiguraAspetto;
   ConfiguraGriglia;
   FTableView.OnDblClick := ModificaMacroParte;
-  DM.dsMacroParti.Manager := nil;
+  // Il dataset appartiene al DataModule e puo' essere ancora attivo
+  // quando si torna a questa pagina: non reimpostare Manager qui.
   DM.dsMacroParti.OnFilterRecord := MacroPartiFilterRecord;
   edtRicerca.OnKeyDown := RicercaKeyDown;
   btnFiltri.Caption := 'Filtra';
