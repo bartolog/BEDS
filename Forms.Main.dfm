@@ -68,6 +68,7 @@ object fMain: TfMain
     end
     object navLetti: TdxNavBarItem
       Caption = 'Catalogo letti'
+      OnClick = navLettiClick
     end
     object navMacroParti: TdxNavBarItem
       Caption = 'Macro-parti'
