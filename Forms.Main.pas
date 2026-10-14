@@ -31,6 +31,7 @@ type
     private
   FPaginaAttiva: TFrame;
   procedure MostraPagina(AFrameClass: TFrameClass);
+  procedure EvidenziaSezione(Indice: Integer);
 
   public
     { Public declarations }
@@ -50,7 +51,7 @@ uses Frames.MacroParti, Frames.Letti, Frames.Magazzino;
 procedure TfMain.FormCreate(Sender: TObject);
 begin
   MostraPagina(TfraDashboard);
-  Navigazione.SelectedLinkIndex := 0;
+  EvidenziaSezione(0);
 end;
 
 procedure TfMain.MostraPagina(AFrameClass: TFrameClass);
@@ -65,24 +66,41 @@ end;
 
 
 
+procedure TfMain.EvidenziaSezione(Indice: Integer);
+const
+  Titoli: array[0..5] of string = (
+    'Dashboard', 'Catalogo letti', 'Macro-parti',
+    'Magazzino', 'Acquisti', 'Produzione');
+var
+  I: Integer;
+begin
+  // Indicatore persistente, indipendente dalla skin WXICompact.
+  for I := 0 to 5 do
+    if I = Indice then
+      Navigazione.Links[I].Item.Caption := '>  ' + Titoli[I]
+    else
+      Navigazione.Links[I].Item.Caption := Titoli[I];
+  Navigazione.SelectedLinkIndex := Indice;
+end;
+
 procedure TfMain.navMacroPartiClick(Sender: TObject);
 begin
 
 
   MostraPagina(TfraMacroParti);
-  Navigazione.SelectedLinkIndex := 2;
+  EvidenziaSezione(2);
 end;
 
 procedure TfMain.navLettiClick(Sender: TObject);
 begin
   MostraPagina(TfraLetti);
-  Navigazione.SelectedLinkIndex := 1;
+  EvidenziaSezione(1);
 end;
 
 procedure TfMain.navMagazzinoClick(Sender: TObject);
 begin
   MostraPagina(TfraMagazzino);
-  Navigazione.SelectedLinkIndex := 3;
+  EvidenziaSezione(3);
 end;
 
 end.
