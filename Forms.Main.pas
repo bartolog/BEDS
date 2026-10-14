@@ -24,6 +24,7 @@ type
     navProduzione: TdxNavBarItem;
     procedure FormCreate(Sender: TObject);
     procedure navMacroPartiClick(Sender: TObject);
+    procedure navLettiClick(Sender: TObject);
   private
     { Private declarations }
     private
@@ -41,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses Frames.MacroParti;
+uses Frames.MacroParti, Frames.Letti;
 
 { TfMain }
 
@@ -67,6 +68,11 @@ begin
 
 
      MostraPagina(TfraMacroParti);
+end;
+
+procedure TfMain.navLettiClick(Sender: TObject);
+begin
+  MostraPagina(TfraLetti);
 end;
 
 end.
