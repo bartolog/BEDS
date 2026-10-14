@@ -27,7 +27,7 @@ object fMain: TfMain
     OptionsStyle.DefaultStyles.Item.BackColor2 = clWhite
     OptionsStyle.DefaultStyles.Item.Font.Charset = DEFAULT_CHARSET
     OptionsStyle.DefaultStyles.Item.Font.Color = clWhite
-    OptionsStyle.DefaultStyles.Item.Font.Height = -15
+    OptionsStyle.DefaultStyles.Item.Font.Height = -18
     OptionsStyle.DefaultStyles.Item.Font.Name = 'Segoe UI'
     OptionsStyle.DefaultStyles.Item.Font.Style = []
     OptionsStyle.DefaultStyles.Item.AssignedValues = [savFont]
@@ -35,10 +35,16 @@ object fMain: TfMain
     OptionsStyle.DefaultStyles.ItemHotTracked.BackColor2 = 11104281
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Charset = DEFAULT_CHARSET
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Color = clWhite
-    OptionsStyle.DefaultStyles.ItemHotTracked.Font.Height = -15
+    OptionsStyle.DefaultStyles.ItemHotTracked.Font.Height = -18
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Name = 'Segoe UI'
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Style = []
     OptionsStyle.DefaultStyles.ItemHotTracked.AssignedValues = [savBackColor, savBackColor2]
+    OptionsStyle.DefaultStyles.ItemSelected.Font.Charset = DEFAULT_CHARSET
+    OptionsStyle.DefaultStyles.ItemSelected.Font.Color = clWhite
+    OptionsStyle.DefaultStyles.ItemSelected.Font.Height = -18
+    OptionsStyle.DefaultStyles.ItemSelected.Font.Name = 'Segoe UI'
+    OptionsStyle.DefaultStyles.ItemSelected.Font.Style = [fsBold]
+    OptionsStyle.DefaultStyles.ItemSelected.AssignedValues = [savFont]
     object Navigazione: TdxNavBarGroup
       Caption = 'Navigazione'
       SelectedLinkIndex = -1
