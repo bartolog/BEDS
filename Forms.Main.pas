@@ -49,7 +49,8 @@ uses Frames.MacroParti, Frames.Letti, Frames.Magazzino;
 
 procedure TfMain.FormCreate(Sender: TObject);
 begin
-      MostraPagina(TfraDashboard)
+  MostraPagina(TfraDashboard);
+  Navigazione.SelectedLinkIndex := 0;
 end;
 
 procedure TfMain.MostraPagina(AFrameClass: TFrameClass);
@@ -68,17 +69,20 @@ procedure TfMain.navMacroPartiClick(Sender: TObject);
 begin
 
 
-     MostraPagina(TfraMacroParti);
+  MostraPagina(TfraMacroParti);
+  Navigazione.SelectedLinkIndex := 2;
 end;
 
 procedure TfMain.navLettiClick(Sender: TObject);
 begin
   MostraPagina(TfraLetti);
+  Navigazione.SelectedLinkIndex := 1;
 end;
 
 procedure TfMain.navMagazzinoClick(Sender: TObject);
 begin
   MostraPagina(TfraMagazzino);
+  Navigazione.SelectedLinkIndex := 3;
 end;
 
 end.
