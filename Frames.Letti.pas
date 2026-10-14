@@ -31,6 +31,8 @@ type
 
 implementation
 
+{$R *.dfm}
+
 uses
   Forms.DataModule;
 
