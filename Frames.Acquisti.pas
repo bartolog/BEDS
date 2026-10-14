@@ -18,6 +18,8 @@ type
     FGridFornitori: TcxGrid;
     FViewFornitori: TcxGridTableView;
     FRicercaFornitori: TEdit;
+    FGrid: TcxGrid;
+    FView: TcxGridTableView;
     procedure MostraOrdini(Sender: TObject);
     procedure MostraFornitori(Sender: TObject);
     procedure CaricaFornitori(Sender: TObject);
@@ -28,8 +30,6 @@ type
     procedure EliminaFornitore(Sender: TObject);
     function FornitoreSelezionato: TFornitore;
     function EditorFornitore(AFornitore: TFornitore): Boolean;
-    FGrid: TcxGrid;
-    FView: TcxGridTableView;
     procedure Carica(Sender: TObject);
     procedure NuovoOrdine(Sender: TObject);
     procedure AggiornaGriglia;
