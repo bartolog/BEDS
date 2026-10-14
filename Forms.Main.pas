@@ -26,6 +26,7 @@ type
     procedure navMacroPartiClick(Sender: TObject);
     procedure navLettiClick(Sender: TObject);
     procedure navMagazzinoClick(Sender: TObject);
+    procedure navAcquistiClick(Sender: TObject);
   private
     { Private declarations }
     private
@@ -44,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-uses Frames.MacroParti, Frames.Letti, Frames.Magazzino;
+uses Frames.MacroParti, Frames.Letti, Frames.Magazzino, Frames.Acquisti;
 
 { TfMain }
 
@@ -99,6 +100,12 @@ procedure TfMain.navMagazzinoClick(Sender: TObject);
 begin
   MostraPagina(TfraMagazzino);
   EvidenziaSezione(3);
+end;
+
+procedure TfMain.navAcquistiClick(Sender: TObject);
+begin
+  MostraPagina(TfraAcquisti);
+  EvidenziaSezione(4);
 end;
 
 end.
