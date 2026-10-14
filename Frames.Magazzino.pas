@@ -3,7 +3,7 @@ unit Frames.Magazzino;
 interface
 
 uses
-  System.Classes, System.SysUtils, System.Variants, System.Generics.Collections, System.UITypes,
+  System.Classes, System.SysUtils, System.Variants, System.Math, System.Generics.Collections, System.UITypes,
   Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs, Vcl.Graphics,
   Data.model, cxGrid, cxGridLevel, cxGridCustomView, cxGridTableView,
   cxButtons, cxControls, cxStyles, cxLookAndFeels;
@@ -205,7 +205,7 @@ begin
       FView.DataController.Values[I, 1] := string(P.Descrizione);
       FView.DataController.Values[I, 2] := G;
       FView.DataController.Values[I, 3] := Min;
-      FView.DataController.Values[I, 4] := MaxInt(0, Min - G);
+      FView.DataController.Values[I, 4] := Max(0, Min - G);
     end;
   finally
     FView.DataController.EndUpdate;
