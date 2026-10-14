@@ -433,8 +433,14 @@ begin
         V.DataController.Values[I, 1] := M.TipoMovimento;
         V.DataController.Values[I, 2] := M.Quantita;
         V.DataController.Values[I, 3] := M.Causale;
-        V.DataController.Values[I, 4] := string(M.Riferimento);
-        V.DataController.Values[I, 5] := string(M.Note);
+        if M.Riferimento.HasValue then
+          V.DataController.Values[I, 4] := string(M.Riferimento)
+        else
+          V.DataController.Values[I, 4] := '';
+        if M.Note.HasValue then
+          V.DataController.Values[I, 5] := string(M.Note)
+        else
+          V.DataController.Values[I, 5] := '';
         V.DataController.Values[I, 6] := Saldo;
       end;
     finally
