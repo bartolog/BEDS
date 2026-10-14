@@ -50,6 +50,7 @@ uses Frames.MacroParti, Frames.Letti, Frames.Magazzino;
 
 procedure TfMain.FormCreate(Sender: TObject);
 begin
+  navMain.OptionsBehavior.Common.AllowSelectLinks := True;
   MostraPagina(TfraDashboard);
   EvidenziaSezione(0);
 end;
@@ -74,12 +75,9 @@ const
 var
   I: Integer;
 begin
-  // Indicatore persistente, indipendente dalla skin WXICompact.
+  // La selezione e' gestita dal NavBar; nessun prefisso nel titolo.
   for I := 0 to 5 do
-    if I = Indice then
-      Navigazione.Links[I].Item.Caption := '>  ' + Titoli[I]
-    else
-      Navigazione.Links[I].Item.Caption := Titoli[I];
+    Navigazione.Links[I].Item.Caption := Titoli[I];
   Navigazione.SelectedLinkIndex := Indice;
 end;
 
