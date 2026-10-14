@@ -6,7 +6,7 @@ uses
   System.Classes, System.SysUtils, System.Generics.Collections, System.UITypes, System.Variants,
   Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs,
   Data.model, cxGrid, cxGridLevel, cxGridCustomView, cxGridTableView,
-  cxButtons, cxControls;
+  cxButtons, cxControls, cxStyles, Vcl.Graphics, System.IOUtils;
 
 type
   TfraLetti = class(TFrame)
@@ -15,6 +15,10 @@ type
     FGrid: TcxGrid;
     FView: TcxGridTableView;
     FRicerca: TEdit;
+    FHeaderStyle: TcxStyle;
+    FSelectionStyle: TcxStyle;
+    procedure ConfiguraPulsante(P: TcxButton; Colore: TColor; const Icona: string);
+    procedure CaricaIcona(P: TcxButton; const NomeFile: string);
     procedure Carica;
     procedure Filtra(Sender: TObject);
     procedure Nuovo(Sender: TObject);
@@ -48,16 +52,24 @@ var
     B.SetBounds(X, 12, 130, 34);
     B.Caption := Titolo;
     B.OnClick := Evento;
+    if Titolo = 'Nuovo' then ConfiguraPulsante(B, $00B36517, 'nuovo.svg')
+    else if Titolo = 'Elimina' then ConfiguraPulsante(B, $004545C6, 'elimina.svg')
+    else if Titolo = 'Aggiorna' then ConfiguraPulsante(B, $009A671E, 'aggiorna.svg')
+    else ConfiguraPulsante(B, $009A671E, 'composizione.svg');
   end;
 begin
   inherited;
   FLetti := TList<TLetto>.Create;
   Align := alClient;
+  Color := $00F7F7F7;
+  Font.Name := 'Segoe UI';
+  Font.Size := 10;
   Barra := TPanel.Create(Self);
   Barra.Parent := Self;
   Barra.Align := alTop;
   Barra.Height := 62;
   Barra.BevelOuter := bvNone;
+  Barra.Color := clWhite;
   Pulsante('Nuovo', 12, Nuovo);
   Pulsante('Modifica', 150, Modifica);
   Pulsante('Elimina', 288, Elimina);
@@ -76,7 +88,19 @@ begin
   FView := FGrid.CreateView(TcxGridTableView) as TcxGridTableView;
   Livello := FGrid.Levels.Add;
   Livello.GridView := FView;
+  FHeaderStyle := TcxStyle.Create(Self);
+  FHeaderStyle.Color := $00F9F5F2;
+  FHeaderStyle.TextColor := $003E2817;
+  FHeaderStyle.Font.Name := 'Segoe UI';
+  FHeaderStyle.Font.Style := [fsBold];
+  FView.Styles.Header := FHeaderStyle;
+  FSelectionStyle := TcxStyle.Create(Self);
+  FSelectionStyle.Color := $00F8EBDD;
+  FSelectionStyle.TextColor := $003E2817;
+  FView.Styles.Selection := FSelectionStyle;
   FView.OptionsView.GroupByBox := False;
+  FView.OptionsView.Indicator := False;
+  FView.OptionsView.GridLines := glVertical;
   FView.OptionsView.ColumnAutoWidth := True;
   FView.OptionsData.Editing := False;
   FView.OptionsData.Deleting := False;
@@ -86,6 +110,34 @@ begin
   with FView.CreateColumn do begin Caption := 'Descrizione'; Width := 450; end;
   with FView.CreateColumn do begin Caption := 'Modello'; Width := 220; end;
   Carica;
+end;
+
+procedure TfraLetti.CaricaIcona(P: TcxButton; const NomeFile: string);
+var
+  Percorso: string;
+begin
+  Percorso := TPath.Combine(ExtractFilePath(ParamStr(0)),
+    TPath.Combine('Icons', NomeFile));
+  if not FileExists(Percorso) then Exit;
+  try
+    P.OptionsImage.Glyph.LoadFromFile(Percorso);
+  except
+    P.OptionsImage.Glyph.Assign(nil);
+  end;
+end;
+
+procedure TfraLetti.ConfiguraPulsante(P: TcxButton; Colore: TColor;
+  const Icona: string);
+begin
+  P.LookAndFeel.NativeStyle := False;
+  P.LookAndFeel.SkinName := '';
+  P.LookAndFeel.Kind := lfFlat;
+  P.Colors.Default := Colore;
+  P.Colors.Normal := Colore;
+  P.Font.Color := clWhite;
+  P.Font.Style := [fsBold];
+  P.ParentFont := False;
+  CaricaIcona(P, Icona);
 end;
 
 destructor TfraLetti.Destroy;
