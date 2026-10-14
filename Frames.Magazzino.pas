@@ -165,9 +165,9 @@ begin
   for M in FMovimenti do
     if Assigned(M.IdMacroParte) and (M.IdMacroParte.Id = AMacroParte.Id) then
     begin
-      if SameText(M.TipoMovimento, 'C') then
+      if SameText(M.TipoMovimento, 'E') then
         Inc(Result, M.Quantita)
-      else if SameText(M.TipoMovimento, 'S') then
+      else if SameText(M.TipoMovimento, 'U') then
         Dec(Result, M.Quantita);
     end;
 end;
@@ -244,13 +244,13 @@ begin
     MessageDlg('Selezionare una macro-parte.', mtInformation, [mbOK], 0);
     Exit;
   end;
-  Tipo := 'C';
+  Tipo := 'E';
   if not InputQuery('Movimento di magazzino',
-    'Tipo movimento (C = carico, S = scarico):', Tipo) then Exit;
+    'Tipo movimento (E = entrata, U = uscita):', Tipo) then Exit;
   Tipo := UpperCase(Trim(Tipo));
-  if (Tipo <> 'C') and (Tipo <> 'S') then
+  if (Tipo <> 'E') and (Tipo <> 'U') then
   begin
-    MessageDlg('Tipo non valido: usare C o S.', mtWarning, [mbOK], 0);
+    MessageDlg('Tipo non valido: usare E o U.', mtWarning, [mbOK], 0);
     Exit;
   end;
   Quantita := '1';
@@ -260,7 +260,7 @@ begin
     MessageDlg('Inserire una quantita intera positiva.', mtWarning, [mbOK], 0);
     Exit;
   end;
-  if (Tipo = 'S') and (Q > Giacenza(P)) then
+  if (Tipo = 'U') and (Q > Giacenza(P)) then
   begin
     MessageDlg('Giacenza insufficiente.', mtWarning, [mbOK], 0);
     Exit;
