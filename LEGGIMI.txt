@@ -1,0 +1,11 @@
+BEDS Step 11 - ricerca, Invio e quantita
+
+- Apertura: non carica piu l'anagrafica componenti finche non si entra nel campo ricerca.
+- La distinta e caricata dalla relazione Aurelius.
+- Invio sulla ricerca: focus sulla griglia componenti.
+- Invio sulla griglia / doppio clic: InputQuery quantita; Invio conferma.
+- Dopo Save+Flush aggiorna la lista associata e la griglia.
+- Dopo Remove+Flush aggiorna la lista associata e la griglia.
+- Nessuna modifica al Data.model.pas o al CRUD macro-parti.
+
+Non compilato in Delphi 13; usare prima su DB di prova.

@@ -1,0 +1,133 @@
+<mxfile host="Electron">
+  <diagram name="Pagina-1" id="eDnh82FkUYYrQFPg64Mk">
+    <mxGraphModel dx="1937" dy="1152" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QSU8FgYgk3WBCisHabY9-20" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-19" parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Prodotto" vertex="1">
+          <mxGeometry height="470" width="200" x="590" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-46" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-47" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-48" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-17" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sopra testiera" Materiale="Abete" Geometria="curva.dxf" id="QSU8FgYgk3WBCisHabY9-5">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="310" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-16" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Listello centrale testiera" Materiale="Abete" Geometria="listello_center_001.dxf" id="QSU8FgYgk3WBCisHabY9-7">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="350" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-18" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sotto testiera" Materiale="Abete" Geometria="curva_below_001.dxf" id="QSU8FgYgk3WBCisHabY9-8">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="390" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-15" parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Macro parte" vertex="1">
+          <mxGeometry height="110" width="220" x="320" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-23" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-29" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sopra testiera" Materiale="Abete" Geometria="curva.dxf" id="QSU8FgYgk3WBCisHabY9-24">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="430" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-25" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-29" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Listello centrale testiera" Materiale="Abete" Geometria="listello_center_001.dxf" id="QSU8FgYgk3WBCisHabY9-26">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="470" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-27" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-29" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sotto testiera" Materiale="Abete" Geometria="curva_below_001.dxf" id="QSU8FgYgk3WBCisHabY9-28">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="510" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-29" parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Macro parte" vertex="1">
+          <mxGeometry height="110" width="220" x="320" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-31" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sopra testiera" Materiale="Abete" Geometria="curva.dxf" id="QSU8FgYgk3WBCisHabY9-32">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="550" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-33" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Listello centrale testiera" Materiale="Abete" Geometria="listello_center_001.dxf" id="QSU8FgYgk3WBCisHabY9-34">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="590" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-35" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sotto testiera" Materiale="Abete" Geometria="curva_below_001.dxf" id="QSU8FgYgk3WBCisHabY9-36">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="630" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-37" parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Macro parte" vertex="1">
+          <mxGeometry height="110" width="220" x="320" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-39" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-45" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sopra testiera" Materiale="Abete" Geometria="curva.dxf" id="QSU8FgYgk3WBCisHabY9-40">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="670" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-41" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-45" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Listello centrale testiera" Materiale="Abete" Geometria="listello_center_001.dxf" id="QSU8FgYgk3WBCisHabY9-42">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="710" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-43" edge="1" parent="1" source="QSU8FgYgk3WBCisHabY9-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="QSU8FgYgk3WBCisHabY9-45" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="Componente" Descrizione="Curva sotto testiera" Materiale="Abete" Geometria="curva_below_001.dxf" id="QSU8FgYgk3WBCisHabY9-44">
+          <mxCell parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1">
+            <mxGeometry height="30" width="170" x="80" y="750" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="QSU8FgYgk3WBCisHabY9-45" parent="1" style="whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Macro parte" vertex="1">
+          <mxGeometry height="110" width="220" x="320" y="670" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
