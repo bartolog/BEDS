@@ -14,6 +14,7 @@ uses
   Aurelius.Linq;
 
 type
+  TCliente = class;
   TComponente = class;
   TComponenteMacroParte = class;
   TFornitore = class;
@@ -21,9 +22,12 @@ type
   TMacroParte = class;
   TMacroParteLetto = class;
   TMovimentoMagazzino = class;
+  TOrdineCliente = class;
   TOrdineFornitore = class;
+  TRigaOrdineCliente = class;
   TRigaOrdineFornitore = class;
   TScorta = class;
+  TClienteDictionary = class;
   TComponenteDictionary = class;
   TComponenteMacroParteDictionary = class;
   TFornitoreDictionary = class;
@@ -31,9 +35,78 @@ type
   TMacroParteDictionary = class;
   TMacroParteLettoDictionary = class;
   TMovimentoMagazzinoDictionary = class;
+  TOrdineClienteDictionary = class;
   TOrdineFornitoreDictionary = class;
+  TRigaOrdineClienteDictionary = class;
   TRigaOrdineFornitoreDictionary = class;
   TScortaDictionary = class;
+  
+  [Entity]
+  [Table('Clienti')]
+  [Sequence('GEN_CLIENTE_ID')]
+  [Id('FId', TIdGenerator.IdentityOrSequence)]
+  TCliente = class
+  private
+    [Column('Id', [TColumnProp.Required])]
+    FId: Int64;
+    
+    [Column('Nome', [TColumnProp.Required], 50)]
+    FNome: string;
+    
+    [Column('Cognome', [TColumnProp.Required], 50)]
+    FCognome: string;
+    
+    [Column('Denominazione', [], 100)]
+    FDenominazione: Nullable<string>;
+    
+    [Column('Azienda', [TColumnProp.Required])]
+    FAzienda: Boolean;
+    
+    [Column('CodiceFiscale', [], 11)]
+    FCodiceFiscale: Nullable<string>;
+    
+    [Column('PIVA', [], 11)]
+    FPIVA: Nullable<string>;
+    
+    [Column('Indirizzo', [], 80)]
+    FIndirizzo: Nullable<string>;
+    
+    [Column('Civico', [], 10)]
+    FCivico: Nullable<string>;
+    
+    [Column('CAP', [], 5)]
+    FCAP: Nullable<string>;
+    
+    [Column('Citta', [], 40)]
+    FCitta: Nullable<string>;
+    
+    [Column('Provincia', [], 2)]
+    FProvincia: Nullable<string>;
+    
+    [Column('Telefono', [], 13)]
+    FTelefono: Nullable<string>;
+    
+    [ManyValuedAssociation([TAssociationProp.Lazy, TAssociationProp.Required], [TCascadeType.SaveUpdate, TCascadeType.Merge], 'FIdCliente')]
+    FOrdiniClienteList: Proxy<TList<TOrdineCliente>>;
+    function GetOrdiniClienteList: TList<TOrdineCliente>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property Id: Int64 read FId write FId;
+    property Nome: string read FNome write FNome;
+    property Cognome: string read FCognome write FCognome;
+    property Denominazione: Nullable<string> read FDenominazione write FDenominazione;
+    property Azienda: Boolean read FAzienda write FAzienda;
+    property CodiceFiscale: Nullable<string> read FCodiceFiscale write FCodiceFiscale;
+    property PIVA: Nullable<string> read FPIVA write FPIVA;
+    property Indirizzo: Nullable<string> read FIndirizzo write FIndirizzo;
+    property Civico: Nullable<string> read FCivico write FCivico;
+    property CAP: Nullable<string> read FCAP write FCAP;
+    property Citta: Nullable<string> read FCitta write FCitta;
+    property Provincia: Nullable<string> read FProvincia write FProvincia;
+    property Telefono: Nullable<string> read FTelefono write FTelefono;
+    property OrdiniClienteList: TList<TOrdineCliente> read GetOrdiniClienteList;
+  end;
   
   [Entity]
   [Table('Componenti')]
@@ -278,9 +351,39 @@ type
   end;
   
   [Entity]
+  [Table('OrdiniCliente')]
+  [Sequence('GEN_ORDINE_CLIENTE_ID')]
+  [Id('FId', TIdGenerator.IdentityOrSequence)]
+  TOrdineCliente = class
+  private
+    [Column('Id', [TColumnProp.Required])]
+    FId: Int64;
+    
+    [Column('Data', [TColumnProp.Required])]
+    FData: TDateTime;
+    
+    [Association([TAssociationProp.Lazy, TAssociationProp.Required], CascadeTypeAll - [TCascadeType.Remove])]
+    [JoinColumn('IdCliente', [TColumnProp.Required], 'Id')]
+    FIdCliente: Proxy<TCliente>;
+    
+    [ManyValuedAssociation([TAssociationProp.Lazy, TAssociationProp.Required], [TCascadeType.SaveUpdate, TCascadeType.Merge, TCascadeType.Remove], 'FIdOrdine')]
+    FRigheOrdineClienteList: Proxy<TList<TRigaOrdineCliente>>;
+    function GetIdCliente: TCliente;
+    procedure SetIdCliente(const Value: TCliente);
+    function GetRigheOrdineClienteList: TList<TRigaOrdineCliente>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property Id: Int64 read FId write FId;
+    property Data: TDateTime read FData write FData;
+    property IdCliente: TCliente read GetIdCliente write SetIdCliente;
+    property RigheOrdineClienteList: TList<TRigaOrdineCliente> read GetRigheOrdineClienteList;
+  end;
+  
+  [Entity]
   [Table('OrdiniFornitore')]
   [UniqueKey('Numero, Anno')]
-  [Sequence('GEN_ORDINE_ID')]
+  [Sequence('GEN_ORDINE_FORNITORE_ID')]
   [Id('FId', TIdGenerator.IdentityOrSequence)]
   TOrdineFornitore = class
   private
@@ -319,6 +422,36 @@ type
     property Stato: string read FStato write FStato;
     property Note: Nullable<string> read FNote write FNote;
     property IdFornitore: TFornitore read GetIdFornitore write SetIdFornitore;
+  end;
+  
+  [Entity]
+  [Table('RigheOrdineCliente')]
+  [Sequence('GEN_RIGA_ORDINE_CLIENTE_ID')]
+  [Id('FId', TIdGenerator.IdentityOrSequence)]
+  TRigaOrdineCliente = class
+  private
+    [Column('Id', [TColumnProp.Required])]
+    FId: Int64;
+    
+    [Column('Qta', [TColumnProp.Required])]
+    FQta: Integer;
+    
+    [Association([TAssociationProp.Lazy, TAssociationProp.Required], CascadeTypeAll - [TCascadeType.Remove])]
+    [JoinColumn('IdOrdine', [TColumnProp.Required], 'Id')]
+    FIdOrdine: Proxy<TOrdineCliente>;
+    
+    [Association([TAssociationProp.Lazy, TAssociationProp.Required], CascadeTypeAll - [TCascadeType.Remove])]
+    [JoinColumn('IdLetto', [TColumnProp.Required], 'Id')]
+    FIdLetto: Proxy<TLetto>;
+    function GetIdOrdine: TOrdineCliente;
+    procedure SetIdOrdine(const Value: TOrdineCliente);
+    function GetIdLetto: TLetto;
+    procedure SetIdLetto(const Value: TLetto);
+  public
+    property Id: Int64 read FId write FId;
+    property Qta: Integer read FQta write FQta;
+    property IdOrdine: TOrdineCliente read GetIdOrdine write SetIdOrdine;
+    property IdLetto: TLetto read GetIdLetto write SetIdLetto;
   end;
   
   [Entity]
@@ -391,6 +524,8 @@ type
     property IdMacroParte: TMacroParte read GetIdMacroParte write SetIdMacroParte;
   end;
   
+  IClienteDictionary = interface;
+  
   IComponenteDictionary = interface;
   
   IComponenteMacroParteDictionary = interface;
@@ -405,11 +540,32 @@ type
   
   IMovimentoMagazzinoDictionary = interface;
   
+  IOrdineClienteDictionary = interface;
+  
   IOrdineFornitoreDictionary = interface;
+  
+  IRigaOrdineClienteDictionary = interface;
   
   IRigaOrdineFornitoreDictionary = interface;
   
   IScortaDictionary = interface;
+  
+  IClienteDictionary = interface(IAureliusEntityDictionary)
+    function Id: TLinqProjection;
+    function Nome: TLinqProjection;
+    function Cognome: TLinqProjection;
+    function Denominazione: TLinqProjection;
+    function Azienda: TLinqProjection;
+    function CodiceFiscale: TLinqProjection;
+    function PIVA: TLinqProjection;
+    function Indirizzo: TLinqProjection;
+    function Civico: TLinqProjection;
+    function CAP: TLinqProjection;
+    function Citta: TLinqProjection;
+    function Provincia: TLinqProjection;
+    function Telefono: TLinqProjection;
+    function OrdiniClienteList: IOrdineClienteDictionary;
+  end;
   
   IComponenteDictionary = interface(IAureliusEntityDictionary)
     function Id: TLinqProjection;
@@ -473,6 +629,13 @@ type
     function IdMacroParte: IMacroParteDictionary;
   end;
   
+  IOrdineClienteDictionary = interface(IAureliusEntityDictionary)
+    function Id: TLinqProjection;
+    function Data: TLinqProjection;
+    function IdCliente: IClienteDictionary;
+    function RigheOrdineClienteList: IRigaOrdineClienteDictionary;
+  end;
+  
   IOrdineFornitoreDictionary = interface(IAureliusEntityDictionary)
     function Id: TLinqProjection;
     function Numero: TLinqProjection;
@@ -482,6 +645,13 @@ type
     function Stato: TLinqProjection;
     function Note: TLinqProjection;
     function IdFornitore: IFornitoreDictionary;
+  end;
+  
+  IRigaOrdineClienteDictionary = interface(IAureliusEntityDictionary)
+    function Id: TLinqProjection;
+    function Qta: TLinqProjection;
+    function IdOrdine: IOrdineClienteDictionary;
+    function IdLetto: ILettoDictionary;
   end;
   
   IRigaOrdineFornitoreDictionary = interface(IAureliusEntityDictionary)
@@ -499,6 +669,24 @@ type
     function Id: TLinqProjection;
     function ScortaMinima: TLinqProjection;
     function IdMacroParte: IMacroParteDictionary;
+  end;
+  
+  TClienteDictionary = class(TAureliusEntityDictionary, IClienteDictionary)
+  public
+    function Id: TLinqProjection;
+    function Nome: TLinqProjection;
+    function Cognome: TLinqProjection;
+    function Denominazione: TLinqProjection;
+    function Azienda: TLinqProjection;
+    function CodiceFiscale: TLinqProjection;
+    function PIVA: TLinqProjection;
+    function Indirizzo: TLinqProjection;
+    function Civico: TLinqProjection;
+    function CAP: TLinqProjection;
+    function Citta: TLinqProjection;
+    function Provincia: TLinqProjection;
+    function Telefono: TLinqProjection;
+    function OrdiniClienteList: IOrdineClienteDictionary;
   end;
   
   TComponenteDictionary = class(TAureliusEntityDictionary, IComponenteDictionary)
@@ -570,6 +758,14 @@ type
     function IdMacroParte: IMacroParteDictionary;
   end;
   
+  TOrdineClienteDictionary = class(TAureliusEntityDictionary, IOrdineClienteDictionary)
+  public
+    function Id: TLinqProjection;
+    function Data: TLinqProjection;
+    function IdCliente: IClienteDictionary;
+    function RigheOrdineClienteList: IRigaOrdineClienteDictionary;
+  end;
+  
   TOrdineFornitoreDictionary = class(TAureliusEntityDictionary, IOrdineFornitoreDictionary)
   public
     function Id: TLinqProjection;
@@ -580,6 +776,14 @@ type
     function Stato: TLinqProjection;
     function Note: TLinqProjection;
     function IdFornitore: IFornitoreDictionary;
+  end;
+  
+  TRigaOrdineClienteDictionary = class(TAureliusEntityDictionary, IRigaOrdineClienteDictionary)
+  public
+    function Id: TLinqProjection;
+    function Qta: TLinqProjection;
+    function IdOrdine: IOrdineClienteDictionary;
+    function IdLetto: ILettoDictionary;
   end;
   
   TRigaOrdineFornitoreDictionary = class(TAureliusEntityDictionary, IRigaOrdineFornitoreDictionary)
@@ -602,6 +806,7 @@ type
   end;
   
   IDictionary = interface(IAureliusDictionary)
+    function Cliente: IClienteDictionary;
     function Componente: IComponenteDictionary;
     function ComponenteMacroParte: IComponenteMacroParteDictionary;
     function Fornitore: IFornitoreDictionary;
@@ -609,13 +814,16 @@ type
     function MacroParte: IMacroParteDictionary;
     function MacroParteLetto: IMacroParteLettoDictionary;
     function MovimentoMagazzino: IMovimentoMagazzinoDictionary;
+    function OrdineCliente: IOrdineClienteDictionary;
     function OrdineFornitore: IOrdineFornitoreDictionary;
+    function RigaOrdineCliente: IRigaOrdineClienteDictionary;
     function RigaOrdineFornitore: IRigaOrdineFornitoreDictionary;
     function Scorta: IScortaDictionary;
   end;
   
   TDictionary = class(TAureliusDictionary, IDictionary)
   public
+    function Cliente: IClienteDictionary;
     function Componente: IComponenteDictionary;
     function ComponenteMacroParte: IComponenteMacroParteDictionary;
     function Fornitore: IFornitoreDictionary;
@@ -623,7 +831,9 @@ type
     function MacroParte: IMacroParteDictionary;
     function MacroParteLetto: IMacroParteLettoDictionary;
     function MovimentoMagazzino: IMovimentoMagazzinoDictionary;
+    function OrdineCliente: IOrdineClienteDictionary;
     function OrdineFornitore: IOrdineFornitoreDictionary;
+    function RigaOrdineCliente: IRigaOrdineClienteDictionary;
     function RigaOrdineFornitore: IRigaOrdineFornitoreDictionary;
     function Scorta: IScortaDictionary;
   end;
@@ -639,6 +849,25 @@ function Dic: IDictionary;
 begin
   if __Dic = nil then __Dic := TDictionary.Create;
   result := __Dic;
+end;
+
+{ TCliente }
+
+constructor TCliente.Create;
+begin
+  inherited;
+  FOrdiniClienteList.SetInitialValue(TList<TOrdineCliente>.Create);
+end;
+
+destructor TCliente.Destroy;
+begin
+  FOrdiniClienteList.DestroyValue;
+  inherited;
+end;
+
+function TCliente.GetOrdiniClienteList: TList<TOrdineCliente>;
+begin
+  result := FOrdiniClienteList.Value;
 end;
 
 { TComponenteMacroParte }
@@ -742,6 +971,35 @@ begin
   FIdMacroParte.Value := Value;
 end;
 
+{ TOrdineCliente }
+
+function TOrdineCliente.GetIdCliente: TCliente;
+begin
+  result := FIdCliente.Value;
+end;
+
+procedure TOrdineCliente.SetIdCliente(const Value: TCliente);
+begin
+  FIdCliente.Value := Value;
+end;
+
+constructor TOrdineCliente.Create;
+begin
+  inherited;
+  FRigheOrdineClienteList.SetInitialValue(TList<TRigaOrdineCliente>.Create);
+end;
+
+destructor TOrdineCliente.Destroy;
+begin
+  FRigheOrdineClienteList.DestroyValue;
+  inherited;
+end;
+
+function TOrdineCliente.GetRigheOrdineClienteList: TList<TRigaOrdineCliente>;
+begin
+  result := FRigheOrdineClienteList.Value;
+end;
+
 { TOrdineFornitore }
 
 function TOrdineFornitore.GetIdFornitore: TFornitore;
@@ -752,6 +1010,28 @@ end;
 procedure TOrdineFornitore.SetIdFornitore(const Value: TFornitore);
 begin
   FIdFornitore.Value := Value;
+end;
+
+{ TRigaOrdineCliente }
+
+function TRigaOrdineCliente.GetIdOrdine: TOrdineCliente;
+begin
+  result := FIdOrdine.Value;
+end;
+
+procedure TRigaOrdineCliente.SetIdOrdine(const Value: TOrdineCliente);
+begin
+  FIdOrdine.Value := Value;
+end;
+
+function TRigaOrdineCliente.GetIdLetto: TLetto;
+begin
+  result := FIdLetto.Value;
+end;
+
+procedure TRigaOrdineCliente.SetIdLetto(const Value: TLetto);
+begin
+  FIdLetto.Value := Value;
 end;
 
 { TRigaOrdineFornitore }
@@ -786,6 +1066,78 @@ end;
 procedure TScorta.SetIdMacroParte(const Value: TMacroParte);
 begin
   FIdMacroParte.Value := Value;
+end;
+
+{ TClienteDictionary }
+
+function TClienteDictionary.Id: TLinqProjection;
+begin
+  Result := Prop('Id');
+end;
+
+function TClienteDictionary.Nome: TLinqProjection;
+begin
+  Result := Prop('Nome');
+end;
+
+function TClienteDictionary.Cognome: TLinqProjection;
+begin
+  Result := Prop('Cognome');
+end;
+
+function TClienteDictionary.Denominazione: TLinqProjection;
+begin
+  Result := Prop('Denominazione');
+end;
+
+function TClienteDictionary.Azienda: TLinqProjection;
+begin
+  Result := Prop('Azienda');
+end;
+
+function TClienteDictionary.CodiceFiscale: TLinqProjection;
+begin
+  Result := Prop('CodiceFiscale');
+end;
+
+function TClienteDictionary.PIVA: TLinqProjection;
+begin
+  Result := Prop('PIVA');
+end;
+
+function TClienteDictionary.Indirizzo: TLinqProjection;
+begin
+  Result := Prop('Indirizzo');
+end;
+
+function TClienteDictionary.Civico: TLinqProjection;
+begin
+  Result := Prop('Civico');
+end;
+
+function TClienteDictionary.CAP: TLinqProjection;
+begin
+  Result := Prop('CAP');
+end;
+
+function TClienteDictionary.Citta: TLinqProjection;
+begin
+  Result := Prop('Citta');
+end;
+
+function TClienteDictionary.Provincia: TLinqProjection;
+begin
+  Result := Prop('Provincia');
+end;
+
+function TClienteDictionary.Telefono: TLinqProjection;
+begin
+  Result := Prop('Telefono');
+end;
+
+function TClienteDictionary.OrdiniClienteList: IOrdineClienteDictionary;
+begin
+  Result := TOrdineClienteDictionary.Create(PropName('OrdiniClienteList'));
 end;
 
 { TComponenteDictionary }
@@ -1007,6 +1359,28 @@ begin
   Result := TMacroParteDictionary.Create(PropName('IdMacroParte'));
 end;
 
+{ TOrdineClienteDictionary }
+
+function TOrdineClienteDictionary.Id: TLinqProjection;
+begin
+  Result := Prop('Id');
+end;
+
+function TOrdineClienteDictionary.Data: TLinqProjection;
+begin
+  Result := Prop('Data');
+end;
+
+function TOrdineClienteDictionary.IdCliente: IClienteDictionary;
+begin
+  Result := TClienteDictionary.Create(PropName('IdCliente'));
+end;
+
+function TOrdineClienteDictionary.RigheOrdineClienteList: IRigaOrdineClienteDictionary;
+begin
+  Result := TRigaOrdineClienteDictionary.Create(PropName('RigheOrdineClienteList'));
+end;
+
 { TOrdineFornitoreDictionary }
 
 function TOrdineFornitoreDictionary.Id: TLinqProjection;
@@ -1047,6 +1421,28 @@ end;
 function TOrdineFornitoreDictionary.IdFornitore: IFornitoreDictionary;
 begin
   Result := TFornitoreDictionary.Create(PropName('IdFornitore'));
+end;
+
+{ TRigaOrdineClienteDictionary }
+
+function TRigaOrdineClienteDictionary.Id: TLinqProjection;
+begin
+  Result := Prop('Id');
+end;
+
+function TRigaOrdineClienteDictionary.Qta: TLinqProjection;
+begin
+  Result := Prop('Qta');
+end;
+
+function TRigaOrdineClienteDictionary.IdOrdine: IOrdineClienteDictionary;
+begin
+  Result := TOrdineClienteDictionary.Create(PropName('IdOrdine'));
+end;
+
+function TRigaOrdineClienteDictionary.IdLetto: ILettoDictionary;
+begin
+  Result := TLettoDictionary.Create(PropName('IdLetto'));
 end;
 
 { TRigaOrdineFornitoreDictionary }
@@ -1110,6 +1506,11 @@ end;
 
 { TDictionary }
 
+function TDictionary.Cliente: IClienteDictionary;
+begin
+  Result := TClienteDictionary.Create;
+end;
+
 function TDictionary.Componente: IComponenteDictionary;
 begin
   Result := TComponenteDictionary.Create;
@@ -1145,9 +1546,19 @@ begin
   Result := TMovimentoMagazzinoDictionary.Create;
 end;
 
+function TDictionary.OrdineCliente: IOrdineClienteDictionary;
+begin
+  Result := TOrdineClienteDictionary.Create;
+end;
+
 function TDictionary.OrdineFornitore: IOrdineFornitoreDictionary;
 begin
   Result := TOrdineFornitoreDictionary.Create;
+end;
+
+function TDictionary.RigaOrdineCliente: IRigaOrdineClienteDictionary;
+begin
+  Result := TRigaOrdineClienteDictionary.Create;
 end;
 
 function TDictionary.RigaOrdineFornitore: IRigaOrdineFornitoreDictionary;
@@ -1171,5 +1582,8 @@ initialization
   RegisterEntity(TFornitore);
   RegisterEntity(TOrdineFornitore);
   RegisterEntity(TRigaOrdineFornitore);
+  RegisterEntity(TCliente);
+  RegisterEntity(TOrdineCliente);
+  RegisterEntity(TRigaOrdineCliente);
 
 end.
