@@ -24,11 +24,15 @@ type
     navProduzione: TdxNavBarItem;
     procedure FormCreate(Sender: TObject);
     procedure navMacroPartiClick(Sender: TObject);
+    procedure navLettiClick(Sender: TObject);
+    procedure navMagazzinoClick(Sender: TObject);
+    procedure navAcquistiClick(Sender: TObject);
   private
     { Private declarations }
     private
   FPaginaAttiva: TFrame;
   procedure MostraPagina(AFrameClass: TFrameClass);
+  procedure EvidenziaSezione(Indice: Integer);
 
   public
     { Public declarations }
@@ -41,13 +45,15 @@ implementation
 
 {$R *.dfm}
 
-uses Frames.MacroParti;
+uses Frames.MacroParti, Frames.Letti, Frames.Magazzino, Frames.Acquisti;
 
 { TfMain }
 
 procedure TfMain.FormCreate(Sender: TObject);
 begin
-      MostraPagina(TfraDashboard)
+  navMain.OptionsBehavior.Common.AllowSelectLinks := True;
+  MostraPagina(TfraDashboard);
+  EvidenziaSezione(0);
 end;
 
 procedure TfMain.MostraPagina(AFrameClass: TFrameClass);
@@ -62,11 +68,44 @@ end;
 
 
 
+procedure TfMain.EvidenziaSezione(Indice: Integer);
+const
+  Titoli: array[0..5] of string = (
+    'Dashboard', 'Catalogo letti', 'Macro-parti',
+    'Magazzino', 'Acquisti', 'Produzione');
+var
+  I: Integer;
+begin
+  // La selezione e' gestita dal NavBar; nessun prefisso nel titolo.
+  for I := 0 to 5 do
+    Navigazione.Links[I].Item.Caption := Titoli[I];
+  Navigazione.SelectedLinkIndex := Indice;
+end;
+
 procedure TfMain.navMacroPartiClick(Sender: TObject);
 begin
 
 
-     MostraPagina(TfraMacroParti);
+  MostraPagina(TfraMacroParti);
+  EvidenziaSezione(2);
+end;
+
+procedure TfMain.navLettiClick(Sender: TObject);
+begin
+  MostraPagina(TfraLetti);
+  EvidenziaSezione(1);
+end;
+
+procedure TfMain.navMagazzinoClick(Sender: TObject);
+begin
+  MostraPagina(TfraMagazzino);
+  EvidenziaSezione(3);
+end;
+
+procedure TfMain.navAcquistiClick(Sender: TObject);
+begin
+  MostraPagina(TfraAcquisti);
+  EvidenziaSezione(4);
 end;
 
 end.

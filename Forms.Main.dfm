@@ -27,7 +27,7 @@ object fMain: TfMain
     OptionsStyle.DefaultStyles.Item.BackColor2 = clWhite
     OptionsStyle.DefaultStyles.Item.Font.Charset = DEFAULT_CHARSET
     OptionsStyle.DefaultStyles.Item.Font.Color = clWhite
-    OptionsStyle.DefaultStyles.Item.Font.Height = -15
+    OptionsStyle.DefaultStyles.Item.Font.Height = -18
     OptionsStyle.DefaultStyles.Item.Font.Name = 'Segoe UI'
     OptionsStyle.DefaultStyles.Item.Font.Style = []
     OptionsStyle.DefaultStyles.Item.AssignedValues = [savFont]
@@ -35,7 +35,7 @@ object fMain: TfMain
     OptionsStyle.DefaultStyles.ItemHotTracked.BackColor2 = 11104281
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Charset = DEFAULT_CHARSET
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Color = clWhite
-    OptionsStyle.DefaultStyles.ItemHotTracked.Font.Height = -15
+    OptionsStyle.DefaultStyles.ItemHotTracked.Font.Height = -18
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Name = 'Segoe UI'
     OptionsStyle.DefaultStyles.ItemHotTracked.Font.Style = []
     OptionsStyle.DefaultStyles.ItemHotTracked.AssignedValues = [savBackColor, savBackColor2]
@@ -68,6 +68,7 @@ object fMain: TfMain
     end
     object navLetti: TdxNavBarItem
       Caption = 'Catalogo letti'
+      OnClick = navLettiClick
     end
     object navMacroParti: TdxNavBarItem
       Caption = 'Macro-parti'
@@ -75,9 +76,11 @@ object fMain: TfMain
     end
     object navMagazzino: TdxNavBarItem
       Caption = 'Magazzino'
+      OnClick = navMagazzinoClick
     end
     object navAcquisti: TdxNavBarItem
       Caption = 'Acquisti'
+      OnClick = navAcquistiClick
     end
     object navProduzione: TdxNavBarItem
       Caption = 'Produzione'
